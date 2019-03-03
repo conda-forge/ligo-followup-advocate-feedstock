@@ -31,11 +31,6 @@ requirements:
 test:
   imports:
     - ligo.followup_advocate
-  requires:
-    - pytest
-    - pytest-mock
-  commands:
-    - python -m pytest --pyargs ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
