@@ -41,7 +41,7 @@ about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
   license: GPLv2+
   license_family: GPL
-  license_file: '{{ environ["RECIPE_DIR"] }}/COPYING.md'
+  license_file: COPYING.md
   summary: LIGO/Virgo Follow-up Advocate Tools
   description: |
     This package provides tools for LIGO/Virgo follow-up advocates to assist
