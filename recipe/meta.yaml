@@ -1,5 +1,5 @@
 {% set name = "ligo-followup-advocate" %}
-{% set version = "0.0.18" %}
+{% set version = "0.0.21" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 504d4d16ef6d3c818839bfc995b331bd72ab5c4f29841d4dc62b34faacdcf3c7
+  sha256: 3d83d3c9adc857691db49f79bb25209eb0bbf896f64dac2ae6dd4e77b5eab0ad
 
 build:
   number: 0
@@ -31,17 +31,12 @@ requirements:
 test:
   imports:
     - ligo.followup_advocate
-  requires:
-    - pytest
-    - pytest-mock
-  commands:
-    - python -m pytest --pyargs ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
   license: GPLv2+
   license_family: GPL
-  license_file: '{{ environ["RECIPE_DIR"] }}/COPYING.md'
+  license_file: COPYING.md
   summary: LIGO/Virgo Follow-up Advocate Tools
   description: |
     This package provides tools for LIGO/Virgo follow-up advocates to assist
