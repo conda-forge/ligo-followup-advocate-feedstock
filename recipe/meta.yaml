@@ -18,6 +18,7 @@ requirements:
   host:
     - pip
     - python >=3.6
+    - setuptools >=30.3.0
   run:
     - python >=3.6
     - astropy
@@ -31,6 +32,12 @@ requirements:
 test:
   imports:
     - ligo.followup_advocate
+  requires:
+    - pytest
+    - pytest-mock
+    - setuptools
+  commands:
+    - python -m pytest --pyargs ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
