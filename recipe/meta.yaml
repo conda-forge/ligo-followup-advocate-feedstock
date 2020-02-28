@@ -1,18 +1,18 @@
 {% set name = "ligo-followup-advocate" %}
-{% set version = "1.1.5" %}
+{% set version = "1.1.6" %}
 
 package:
-  name: "{{ name|lower }}"
-  version: "{{ version }}"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4c597181d07efffbb73c76cbff2dc726e28883c16b9ddd2420c1fafffb816e39
+  sha256: a505bed9cd1f4e4631ae8b2af215c1c6481ae2a12b9d3fc0f8d6ac86de2f5a8e
 
 build:
   number: 0
   noarch: python
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv "
+  script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv '
 
 requirements:
   host:
@@ -40,11 +40,11 @@ test:
     - python -m pytest --pyargs ligo.followup_advocate
 
 about:
-  home: "https://git.ligo.org/emfollow/ligo-followup-advocate"
-  license: "GPL-2.0-or-later"
-  license_family: "GPL"
-  license_file: "COPYING.md"
-  summary: "LIGO/Virgo Follow-up Advocate Tools"
+  home: https://git.ligo.org/emfollow/ligo-followup-advocate
+  license: GPL-2.0-or-later
+  license_family: GPL
+  license_file: COPYING.md
+  summary: LIGO/Virgo Follow-up Advocate Tools
   description: |
     This package provides tools for LIGO/Virgo follow-up advocates to assist
     in tasks such as drafting astronomical bulletins for gravitational-wave

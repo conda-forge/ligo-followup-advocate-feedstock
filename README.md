@@ -3,7 +3,7 @@ About ligo-followup-advocate
 
 Home: https://git.ligo.org/emfollow/ligo-followup-advocate
 
-Package license: GPLv2+
+Package license: GPL-2.0-or-later
 
 Feedstock license: BSD 3-Clause
 
