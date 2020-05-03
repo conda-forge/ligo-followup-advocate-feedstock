@@ -1,5 +1,5 @@
 {% set name = "ligo-followup-advocate" %}
-{% set version = "1.1.7" %}
+{% set version = "1.1.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e7947d697933a80f2261dae51d7c48f3f151e2e65a358d455c406612447299f6
+  sha256: 1c5fc183f9d5e7afc2dfdbf698e7be6ca038d537445ed38af3beb21b8896fd85
 
 build:
   number: 0
@@ -25,7 +25,7 @@ requirements:
     - humanize
     - jinja2
     - ligo-gracedb >=2.0.0
-    - ligo.skymap
+    - ligo.skymap >=0.1.10
     - lxml
     - numpy
 
