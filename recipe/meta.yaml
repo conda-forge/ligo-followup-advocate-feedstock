@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   noarch: python
-  script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv '
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -33,14 +33,19 @@ test:
   imports:
     - ligo.followup_advocate
   requires:
-    - pytest
+    - pip
+    - pytest >=3.0
     - pytest-mock
     - setuptools
   commands:
-    - python -m pytest --pyargs ligo.followup_advocate
+    # check requirements
+    - python -m pip check
+    # run test suite
+    - python -m pytest -ra -v --pyargs ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
+  dev_url: https://git.ligo.org/emfollow/ligo-followup-advocate.git
   license: GPL-2.0-or-later
   license_family: GPL
   license_file: COPYING.md
