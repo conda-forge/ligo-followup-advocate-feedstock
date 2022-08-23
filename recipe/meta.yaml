@@ -33,6 +33,8 @@ test:
   imports:
     - ligo.followup_advocate
   requires:
+    # pytest fails on namespace package, so we need:
+    - ligo-common
     - pip
     - pytest >=3.0
     - pytest-mock
