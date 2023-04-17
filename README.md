@@ -1,11 +1,11 @@
-About ligo-followup-advocate
-============================
+About ligo-followup-advocate-feedstock
+======================================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ligo-followup-advocate-feedstock/blob/main/LICENSE.txt)
 
 Home: https://git.ligo.org/emfollow/ligo-followup-advocate
 
 Package license: GPL-2.0-or-later
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ligo-followup-advocate-feedstock/blob/main/LICENSE.txt)
 
 Summary: LIGO/Virgo Follow-up Advocate Tools
 
