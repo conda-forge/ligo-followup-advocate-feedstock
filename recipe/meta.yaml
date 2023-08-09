@@ -1,5 +1,5 @@
 {% set name = "ligo-followup-advocate" %}
-{% set version = "1.2.5" %}
+{% set version = "1.2.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 14d56b82ddb31489f01d870f46d1fb605a2c5435f2fb2d7eccfe3a048c0b1ddd
+  sha256: f18bf4999a3118a86043b2d4ff216783a68757f89629b60907cc01186b0b734e
 
 build:
   number: 0
