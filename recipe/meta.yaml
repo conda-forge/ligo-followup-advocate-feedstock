@@ -10,22 +10,22 @@ source:
   sha256: 7e23f16feb7e999544201bca15f4521c6325bc8c9a2ff8df6f3918ec4615f399
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python >=3.9
     - setuptools >=30.3.0
   run:
-    - python >=3.6
+    - python >=3.9
     - astropy
     - humanize
     - jinja2
     - ligo-gracedb >=2.0.0
-    - ligo.skymap >=0.1.10
+    - ligo.skymap >=1.1.1
     - lxml
     - numpy
 
