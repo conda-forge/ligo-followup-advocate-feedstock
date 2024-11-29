@@ -10,7 +10,7 @@ source:
   sha256: 8fabdc381bbfc374bbf3c6cc6a97a8b69a5d801024c2f39472c1752263a37ef8
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
@@ -21,7 +21,7 @@ requirements:
     - setuptools >=30.3.0
   run:
     - python >=3.6
-    - astropy
+    - astropy-base
     - humanize
     - jinja2
     - ligo-gracedb >=2.0.0
