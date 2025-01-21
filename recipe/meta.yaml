@@ -7,21 +7,21 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: ebbf304eb28355209f8c0e680c57cf2541a63772416c224398773c88651a7a2f
+  sha256: 8fabdc381bbfc374bbf3c6cc6a97a8b69a5d801024c2f39472c1752263a37ef8
 
 build:
-  number: 0
+  number: 2
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
     - setuptools >=30.3.0
   run:
-    - python >=3.6
-    - astropy
+    - python >={{ python_min }}
+    - astropy-base
     - humanize
     - jinja2
     - ligo-gracedb >=2.0.0
@@ -37,6 +37,7 @@ test:
     - pytest >=3.0
     - pytest-mock
     - setuptools
+    - python {{ python_min }}
   commands:
     # check requirements
     - python -m pip check
