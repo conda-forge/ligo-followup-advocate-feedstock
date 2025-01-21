@@ -1,5 +1,5 @@
 {% set name = "ligo-followup-advocate" %}
-{% set version = "1.2.11” %}
+{% set version = "1.2.11" %}
 
 package:
   name: {{ name|lower }}
