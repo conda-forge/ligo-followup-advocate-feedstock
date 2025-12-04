@@ -33,11 +33,11 @@ requirements:
     - numpy
 
 test:
-  imports:
-    - ligo.followup_advocate
+  files:
+    - pytest.ini
   requires:
     - pip
-    - pytest >=3.0
+    - pytest >=8.1
     - pytest-mock
     - setuptools
     - python {{ python_min }}
@@ -46,6 +46,8 @@ test:
     - python -m pip check
     # run test suite
     - python -m pytest -ra -v --pyargs ligo.followup_advocate
+  imports:
+    - ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
