@@ -8,6 +8,9 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
   sha256: 83a11f84ba8d9b995e089af3d74271f78cb2083c4d89019805c1bdfcd7b48d88
+  patches:
+    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/235
+    - 0001-Use-Path-relative-to-test-module-to-find-circular-te.patch
 
 build:
   number: 0
