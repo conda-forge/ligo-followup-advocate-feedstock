@@ -1,18 +1,18 @@
-From 4b44d68e8af4d349b76a947a819d257da8d03c43 Mon Sep 17 00:00:00 2001
+From 0ddcb7ba50989f938127d19d98693d8b2c372a15 Mon Sep 17 00:00:00 2001
 From: Duncan Macleod <macleoddm@cardiff.ac.uk>
 Date: Thu, 4 Dec 2025 10:30:38 +0000
 Subject: [PATCH] Use Path relative to test module to find circular templates
 
 Rather than a string relative to the project directory
 ---
- .../test/test_circular_text.py                | 98 +++++++++++--------
- 1 file changed, 56 insertions(+), 42 deletions(-)
+ .../test/test_circular_text.py                | 102 ++++++++++--------
+ 1 file changed, 58 insertions(+), 44 deletions(-)
 
 diff --git a/ligo/followup_advocate/test/test_circular_text.py b/ligo/followup_advocate/test/test_circular_text.py
-index 435119b..a585e79 100644
+index 7a3eeae..ce1dd6e 100644
 --- a/ligo/followup_advocate/test/test_circular_text.py
 +++ b/ligo/followup_advocate/test/test_circular_text.py
-@@ -31,36 +31,38 @@ M5679: CBC MBTA early warning
+@@ -33,44 +33,46 @@ M5679: CBC MBTA early warning
  The template numbers below correspond to the various templates in:
  https://dcc.ligo.org/LIGO-P2300108
  """
@@ -58,8 +58,18 @@ index 435119b..a585e79 100644
 +    assert text == expected
  
  
+ def test_cbc_aframe_compose():
+     """"Template 4: Aframe preferred event initial text"""
+     text = ligo.followup_advocate.compose(
+                'S2376', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'cbc_compose_aframe.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'cbc_compose_aframe.txt').read_text()
++    assert text == expected
+ 
+ 
  def test_skymap_update():
-@@ -68,8 +70,8 @@ def test_skymap_update():
+@@ -78,8 +80,8 @@ def test_skymap_update():
      text = ligo.followup_advocate.compose_update(
                 'S5678', client=mockgracedb, remove_text_wrap=False,
                 update_types=['sky_localization'])
@@ -70,7 +80,7 @@ index 435119b..a585e79 100644
  
  
  def test_raven_update():
-@@ -77,8 +79,8 @@ def test_raven_update():
+@@ -87,8 +89,8 @@ def test_raven_update():
      text = ligo.followup_advocate.compose_update(
                 'S5678', client=mockgracedb, remove_text_wrap=False,
                 update_types=['raven'])
@@ -81,7 +91,7 @@ index 435119b..a585e79 100644
  
  
  def test_general_update():
-@@ -87,8 +89,8 @@ def test_general_update():
+@@ -97,8 +99,8 @@ def test_general_update():
                 'S5678', client=mockgracedb, remove_text_wrap=False,
                 update_types=['sky_localization', 'p_astro',
                               'em_bright', 'raven'])
@@ -92,7 +102,7 @@ index 435119b..a585e79 100644
  
  
  def test_classification_update():
-@@ -96,56 +98,62 @@ def test_classification_update():
+@@ -106,56 +108,62 @@ def test_classification_update():
      text = ligo.followup_advocate.compose_update(
                 'S5678', client=mockgracedb, remove_text_wrap=False,
                 update_types=['p_astro', 'em_bright'])
@@ -169,7 +179,7 @@ index 435119b..a585e79 100644
  
  
  def test_medium_latency_cbc_burst_detection():
-@@ -153,16 +161,20 @@ def test_medium_latency_cbc_burst_detection():
+@@ -163,16 +171,20 @@ def test_medium_latency_cbc_burst_detection():
      text = ligo.followup_advocate.compose_grb_medium_latency(
                 'E1122', client=mockgracedb, remove_text_wrap=False,
                 use_detection_template=True)
@@ -194,7 +204,7 @@ index 435119b..a585e79 100644
  
  
  def test_medium_latency_cbc_burst_exclusion():
-@@ -170,16 +182,18 @@ def test_medium_latency_cbc_burst_exclusion():
+@@ -180,16 +192,18 @@ def test_medium_latency_cbc_burst_exclusion():
      text = ligo.followup_advocate.compose_grb_medium_latency(
                 'E2244', client=mockgracedb, remove_text_wrap=False,
                 use_detection_template=True)
@@ -217,7 +227,7 @@ index 435119b..a585e79 100644
  
  
  def test_llama_icecube_alert():
-@@ -187,21 +201,21 @@ def test_llama_icecube_alert():
+@@ -197,21 +211,21 @@ def test_llama_icecube_alert():
      text = ligo.followup_advocate.compose_llama(
                 'S2468', client=mockgracedb, remove_text_wrap=False,
                 icecube_alert='IceCubeCascade-230430a')
