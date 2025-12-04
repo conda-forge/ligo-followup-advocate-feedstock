@@ -1,0 +1,250 @@
+From 4b44d68e8af4d349b76a947a819d257da8d03c43 Mon Sep 17 00:00:00 2001
+From: Duncan Macleod <macleoddm@cardiff.ac.uk>
+Date: Thu, 4 Dec 2025 10:30:38 +0000
+Subject: [PATCH] Use Path relative to test module to find circular templates
+
+Rather than a string relative to the project directory
+---
+ .../test/test_circular_text.py                | 98 +++++++++++--------
+ 1 file changed, 56 insertions(+), 42 deletions(-)
+
+diff --git a/ligo/followup_advocate/test/test_circular_text.py b/ligo/followup_advocate/test/test_circular_text.py
+index 435119b..a585e79 100644
+--- a/ligo/followup_advocate/test/test_circular_text.py
++++ b/ligo/followup_advocate/test/test_circular_text.py
+@@ -31,36 +31,38 @@ M5679: CBC MBTA early warning
+ The template numbers below correspond to the various templates in:
+ https://dcc.ligo.org/LIGO-P2300108
+ """
++
++from pathlib import Path
++
+ import ligo.followup_advocate
+ from ligo.followup_advocate.test.test_tool import MockGraceDb
+ 
+-
+ mockgracedb = MockGraceDb('https://gracedb.invalid/api/')
+-path = "ligo/followup_advocate/test/templates/"
++templates_path = Path(__file__).parent / "templates"
+ 
+ 
+ def test_cbc_compose():
+     """Template 1: Standard CBC BNS initial text"""
+     text = ligo.followup_advocate.compose(
+                'S1234', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'cbc_compose.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'cbc_compose.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_burst_compose():
+     """"Template 2: Standard unmodeled Burst initial text"""
+     text = ligo.followup_advocate.compose(
+                'S2468', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'burst_compose.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'burst_compose.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_cwb_burst_compose():
+     """"Template 3: CWB BBH preferred event initial text"""
+     text = ligo.followup_advocate.compose(
+                'S2469', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'cwb_burst_compose.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'cwb_burst_compose.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_skymap_update():
+@@ -68,8 +70,8 @@ def test_skymap_update():
+     text = ligo.followup_advocate.compose_update(
+                'S5678', client=mockgracedb, remove_text_wrap=False,
+                update_types=['sky_localization'])
+-    with open(path + 'skymap_update.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'skymap_update.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_raven_update():
+@@ -77,8 +79,8 @@ def test_raven_update():
+     text = ligo.followup_advocate.compose_update(
+                'S5678', client=mockgracedb, remove_text_wrap=False,
+                update_types=['raven'])
+-    with open(path + 'raven_update.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'raven_update.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_general_update():
+@@ -87,8 +89,8 @@ def test_general_update():
+                'S5678', client=mockgracedb, remove_text_wrap=False,
+                update_types=['sky_localization', 'p_astro',
+                              'em_bright', 'raven'])
+-    with open(path + 'general_update.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'general_update.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_classification_update():
+@@ -96,56 +98,62 @@ def test_classification_update():
+     text = ligo.followup_advocate.compose_update(
+                'S5678', client=mockgracedb, remove_text_wrap=False,
+                update_types=['p_astro', 'em_bright'])
+-    with open(path + 'classification_update.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'classification_update.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_ssm_compose():
+     """"Template 8: SSM preferred initial text"""
+     text = ligo.followup_advocate.compose(
+                'S6789', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'ssm_compose.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'ssm_compose.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_raven_with_initial_circular():
+     """"Template 9: RAVEN GRB coincidence with BNS"""
+     text = ligo.followup_advocate.compose_raven(
+                'S1234', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'raven_with_initial_circular.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'raven_with_initial_circular.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_raven_with_snews():
+     """"Template 10: RAVEN SNEWS coindience with Burst"""
+     text = ligo.followup_advocate.compose_raven(
+                'S2468', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'raven_with_snews.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'raven_with_snews.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_raven_without_initial_circular():
+     """"Template 11: RAVEN subthreshold GRB with low significance NSBH"""
+     text = ligo.followup_advocate.compose_raven(
+                'S3456', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'raven_without_initial_circular.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'raven_without_initial_circular.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_medium_latency_cbc_only_detection():
+     """"Template 12: PyGRB CBC initial text"""
+     text = ligo.followup_advocate.compose_grb_medium_latency(
+                'E1235', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'medium_latency_cbc_only_detection.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'medium_latency_cbc_only_detection.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_medium_latency_cbc_detection():
+     """"Template 13: PyGRB and X-pipeline CBC initial text"""
+     text = ligo.followup_advocate.compose_grb_medium_latency(
+                'E1234', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'medium_latency_cbc_detection.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'medium_latency_cbc_detection.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_medium_latency_cbc_burst_detection():
+@@ -153,16 +161,20 @@ def test_medium_latency_cbc_burst_detection():
+     text = ligo.followup_advocate.compose_grb_medium_latency(
+                'E1122', client=mockgracedb, remove_text_wrap=False,
+                use_detection_template=True)
+-    with open(path + 'medium_latency_cbc_burst_detection.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'medium_latency_cbc_burst_detection.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_medium_latency_cbc_exclusion():
+     """"Template 15: PyGRB CBC non-detection"""
+     text = ligo.followup_advocate.compose_grb_medium_latency(
+                'E1134', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'medium_latency_cbc_exclusion.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'medium_latency_cbc_exclusion.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_medium_latency_cbc_burst_exclusion():
+@@ -170,16 +182,18 @@ def test_medium_latency_cbc_burst_exclusion():
+     text = ligo.followup_advocate.compose_grb_medium_latency(
+                'E2244', client=mockgracedb, remove_text_wrap=False,
+                use_detection_template=True)
+-    with open(path + 'medium_latency_cbc_burst_exclusion.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (
++        templates_path / 'medium_latency_cbc_burst_exclusion.txt'
++    ).read_text()
++    assert text == expected
+ 
+ 
+ def test_llama_neutrino_track():
+     """"Template 17: LLAMA neutrio track with Burst"""
+     text = ligo.followup_advocate.compose_llama(
+                'S2468', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'llama_neutrino_track.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'llama_neutrino_track.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_llama_icecube_alert():
+@@ -187,21 +201,21 @@ def test_llama_icecube_alert():
+     text = ligo.followup_advocate.compose_llama(
+                'S2468', client=mockgracedb, remove_text_wrap=False,
+                icecube_alert='IceCubeCascade-230430a')
+-    with open(path + 'llama_icecube_alert.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'llama_icecube_alert.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_retraction():
+     """"Template 19: General retraction"""
+     text = ligo.followup_advocate.compose_retraction(
+                'S1234', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'retraction.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'retraction.txt').read_text()
++    assert text == expected
+ 
+ 
+ def test_retraction_early_warning():
+     """"Template 20: Retraction of early warning candidate"""
+     text = ligo.followup_advocate.compose_retraction(
+                'S5678', client=mockgracedb, remove_text_wrap=False)
+-    with open(path + 'retraction_early_warning.txt', 'r') as file:
+-        assert text == file.read()
++    expected = (templates_path / 'retraction_early_warning.txt').read_text()
++    assert text == expected
+-- 
+2.39.5
+
