@@ -8,6 +8,9 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
   sha256: f8ffb2b45a689790068cdeae10a38a76136f0d49835eab158e602694b52bde7d
+  patches:
+    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/235
+    - 0001-Use-Path-relative-to-test-module-to-find-circular-te.patch
 
 build:
   number: 0
@@ -19,8 +22,8 @@ requirements:
     - pip
     - python {{ python_min }}
     - setuptools >=30.3.0
+    - wheel
   run:
-    - python >={{ python_min }}
     - astropy-base
     - humanize
     - jinja2
@@ -28,21 +31,24 @@ requirements:
     - ligo.skymap >=0.1.10
     - lxml
     - numpy
+    - python >={{ python_min }}
 
 test:
-  imports:
-    - ligo.followup_advocate
+  files:
+    - pytest.ini
   requires:
     - pip
-    - pytest >=3.0
+    - pytest >=8.1
     - pytest-mock
-    - setuptools
     - python {{ python_min }}
   commands:
     # check requirements
     - python -m pip check
+    - python -m pip show ligo-followup-advocate
     # run test suite
     - python -m pytest -ra -v --pyargs ligo.followup_advocate
+  imports:
+    - ligo.followup_advocate
 
 about:
   home: https://git.ligo.org/emfollow/ligo-followup-advocate
