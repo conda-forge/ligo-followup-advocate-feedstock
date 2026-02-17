@@ -1,0 +1,79 @@
+schema_version: 1
+
+context:
+  name: ligo-followup-advocate
+  version: 1.3.10
+  python_min: 3.11
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  sha256: 81d657a6c897bedef65a688271b7ef081f83d28c1f8ef10a4f639788604fdb3b
+  patches:
+    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/235
+    - 0001-Use-Path-relative-to-test-module-to-find-circular-te.patch
+    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/236
+    - 0002-Update-humanize-version-to-fix-rounding.patch
+
+build:
+  number: 1
+  noarch: python
+  python:
+    entry_points:
+      - ligo-followup-advocate = ligo.followup_advocate.tool:main
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools >=30.3.0
+    - wheel
+  run:
+    - astropy-base
+    - humanize
+    - humanize >=4.15.0
+    - jinja2
+    - ligo-gracedb >=2.0.0
+    - ligo.skymap >=1.1.1
+    - lxml
+    - numpy
+    - python >=${{ python_min }}
+
+tests:
+  - files:
+      recipe:
+        - pytest.ini
+    requirements:
+      run:
+        - pip
+        - pytest >=8.1
+        - pytest-mock
+        - python ${{ python_min }}.*
+    script:
+      # Check metadata
+      - python -m pip check
+      - python -m pip show ligo-followup-advocate
+      # Run test suite
+      - python -m pytest -ra -v --pyargs ligo.followup_advocate
+      # Check entry point
+      - ligo-followup-advocate --help
+
+about:
+  summary: LIGO/Virgo Follow-up Advocate Tools
+  description: |
+    This package provides tools for LIGO/Virgo follow-up advocates to assist
+    in tasks such as drafting astronomical bulletins for gravitational-wave
+    detections.
+  homepage: https://git.ligo.org/emfollow/ligo-followup-advocate
+  repository: https://git.ligo.org/emfollow/ligo-followup-advocate.git
+  license: GPL-2.0-or-later
+  license_file: COPYING.md
+
+extra:
+  recipe-maintainers:
+    - bpiotrzkowski
+    - duncanmmacleod
