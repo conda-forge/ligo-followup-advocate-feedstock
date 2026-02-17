@@ -15,6 +15,8 @@ source:
   patches:
     # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/235
     - 0001-Use-Path-relative-to-test-module-to-find-circular-te.patch
+    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/236
+    - 0002-Update-humanize-version-to-fix-rounding.patch
 
 build:
   number: 1
@@ -33,9 +35,10 @@ requirements:
   run:
     - astropy-base
     - humanize
+    - humanize >=4.15.0
     - jinja2
     - ligo-gracedb >=2.0.0
-    - ligo.skymap >=0.1.10
+    - ligo.skymap >=1.1.1
     - lxml
     - numpy
     - python >=${{ python_min }}
