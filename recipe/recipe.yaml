@@ -3,10 +3,9 @@ schema_version: 1
 context:
   name: ligo-followup-advocate
   version: "2.2.0"
-  python_min: 3.11
 
 package:
-  name: ${{ name|lower }}
+  name: ligo-followup-advocate
   version: ${{ version }}
 
 source:
