@@ -12,11 +12,6 @@ package:
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
   sha256: ef58fe149c4dce01f5b3687afb49a5336d04e5312bf9d38a67e0bf3d91d1c51d
-  patches:
-    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/235
-    - 0001-Use-Path-relative-to-test-module-to-find-circular-te.patch
-    # Backport https://git.ligo.org/emfollow/ligo-followup-advocate/-/merge_requests/236
-    - 0002-Update-humanize-version-to-fix-rounding.patch
 
 build:
   number: 0
@@ -24,22 +19,20 @@ build:
   python:
     entry_points:
       - ligo-followup-advocate = ligo.followup_advocate.tool:main
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - pip
     - python ${{ python_min }}.*
-    - setuptools >=30.3.0
-    - wheel
+    - setuptools >=77
+    - setuptools-scm >=8
   run:
     - astropy-base
-    - humanize
     - humanize >=4.15.0
     - jinja2
-    - ligo-gracedb >=2.0.0
+    - ligo-gracedb >=2.16.0
     - ligo.skymap >=1.1.1
-    - lxml
     - numpy
     - python >=${{ python_min }}
 
