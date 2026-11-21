@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: ligo-followup-advocate
-  version: "2.2.0"
+  version: "2.2.1"
 
 package:
   name: ligo-followup-advocate
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
-  sha256: ef58fe149c4dce01f5b3687afb49a5336d04e5312bf9d38a67e0bf3d91d1c51d
+  sha256: 2524cc948e225b6e6e016f9d4fad1c07d75447adec52c6d4ae192c95db4a5d08
 
 build:
   number: 0
